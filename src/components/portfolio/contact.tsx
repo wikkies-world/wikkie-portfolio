@@ -184,10 +184,6 @@ export default function Contact() {
                 </>
               )}
             </motion.button>
-            <p className="text-xs text-muted-foreground/70 flex items-center justify-center gap-1.5">
-              <ExternalLink className="w-3 h-3" />
-              Sends your message via WhatsApp to +91 8374843155
-            </p>
           </motion.form>
 
           {/* Social Links */}

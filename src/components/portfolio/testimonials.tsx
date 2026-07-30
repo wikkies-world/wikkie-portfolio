@@ -162,9 +162,7 @@ export default function Testimonials() {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="text-center text-muted-foreground/70 text-sm mt-8"
         >
-          {loaded
-            ? 'Testimonials are stored in the database — new reviews are added over time.'
-            : 'Loading latest client reviews…'}
+          {loaded ? '' : 'Loading latest client reviews…'}
         </motion.p>
       </div>
     </section>

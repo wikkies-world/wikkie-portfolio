@@ -116,16 +116,23 @@ function VideoCard({
   video,
   index,
   isInView,
+  isActiveVideo,
+  onPlayStart,
+  onPause,
 }: {
   video: Video
   index: number
   isInView: boolean
+  isActiveVideo: boolean
+  onPlayStart: () => void
+  onPause: () => void
 }) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const frameRef = useRef<HTMLDivElement>(null)
   const [state, setState] = useState<PlayerState>('idle')
   const [progress, setProgress] = useState(0)
   const [currentTime, setCurrentTime] = useState(0)
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false)
   const [duration, setDuration] = useState(video.duration)
   const [muted, setMuted] = useState(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
@@ -139,6 +146,7 @@ function VideoCard({
       setState('loading')
       v.muted = false
       v.volume = 1.0
+      onPlayStart()
       const playPromise = v.play()
       if (playPromise) {
         playPromise
@@ -155,9 +163,12 @@ function VideoCard({
       }
     } else if (state === 'playing') {
       v.pause()
+      setState('paused')
+      onPause()
     } else if (state === 'paused' || state === 'ended') {
       if (state === 'ended') v.currentTime = 0
       v.muted = false
+      onPlayStart()
       v.play()
         .then(() => {
           setState('playing')
@@ -171,9 +182,12 @@ function VideoCard({
           })
         })
     }
-  }, [state])
+  }, [onPause, onPlayStart, state])
 
-  const handlePause = useCallback(() => setState('paused'), [])
+  const handlePause = useCallback(() => {
+    setState('paused')
+    onPause()
+  }, [onPause])
   const handleEnded = useCallback(() => {
     setState('ended')
     setProgress(0)
@@ -239,6 +253,36 @@ function VideoCard({
     return () => document.removeEventListener('fullscreenchange', onFsChange)
   }, [])
 
+  useEffect(() => {
+    const v = videoRef.current
+    if (!v) return
+
+    if (!isActiveVideo && (state === 'playing' || state === 'loading')) {
+      v.pause()
+      setState('paused')
+    }
+  }, [isActiveVideo, state])
+
+  useEffect(() => {
+    if (!isInView || shouldLoadVideo) return
+
+    const node = frameRef.current
+    if (!node) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setShouldLoadVideo(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '200px' },
+    )
+
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [isInView, shouldLoadVideo])
+
   const showPoster = state === 'idle'
   const showControls =
     state === 'playing' || state === 'paused' || state === 'ended' || state === 'loading'
@@ -271,9 +315,9 @@ function VideoCard({
             object-contain in fullscreen (no cropping), object-cover otherwise. */}
         <video
           ref={videoRef}
-          src={video.src}
+          src={shouldLoadVideo ? video.src : undefined}
           poster={showPoster ? video.poster : undefined}
-          preload="none"
+          preload={shouldLoadVideo ? 'metadata' : 'none'}
           playsInline
           onPlay={() => setState('playing')}
           onPause={handlePause}
@@ -405,6 +449,7 @@ function VideoCard({
 
 export default function Works() {
   const [activeCategory, setActiveCategory] = useState<string>('All')
+  const [activeVideoId, setActiveVideoId] = useState<string | null>(null)
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
   // Resolves to Cloudinary CDN URLs if a manifest exists, else local files
@@ -465,7 +510,7 @@ export default function Works() {
             Portrait (9:16) videos render first, then landscape. */}
         <div
           key={activeCategory}
-          className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 [column-gap:1.5rem]"
+          className="columns-2 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-4 [column-gap:1.5rem]"
         >
           {filteredVideos.map((video, index) => (
             <VideoCard
@@ -473,6 +518,9 @@ export default function Works() {
               video={video}
               index={index}
               isInView={isInView}
+              isActiveVideo={activeVideoId === video.id}
+              onPlayStart={() => setActiveVideoId(video.id)}
+              onPause={() => setActiveVideoId((current) => (current === video.id ? null : current))}
             />
           ))}
         </div>

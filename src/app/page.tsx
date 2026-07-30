@@ -1,19 +1,24 @@
 'use client'
 
+import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowUp } from 'lucide-react'
-import CustomCursor from '@/components/portfolio/custom-cursor'
 import Navbar from '@/components/portfolio/navbar'
 import Hero from '@/components/portfolio/hero'
-import About from '@/components/portfolio/about'
-import Marquee from '@/components/portfolio/marquee'
-import Works from '@/components/portfolio/works'
-import Services from '@/components/portfolio/services'
-import Process from '@/components/portfolio/process'
-import Testimonials from '@/components/portfolio/testimonials'
-import Contact from '@/components/portfolio/contact'
-import Footer from '@/components/portfolio/footer'
+
+const CustomCursor = dynamic(() => import('@/components/portfolio/custom-cursor'), {
+  ssr: false,
+  loading: () => null,
+})
+const About = dynamic(() => import('@/components/portfolio/about'), { ssr: false })
+const Marquee = dynamic(() => import('@/components/portfolio/marquee'), { ssr: false })
+const Works = dynamic(() => import('@/components/portfolio/works'), { ssr: false })
+const Services = dynamic(() => import('@/components/portfolio/services'), { ssr: false })
+const Process = dynamic(() => import('@/components/portfolio/process'), { ssr: false })
+const Testimonials = dynamic(() => import('@/components/portfolio/testimonials'), { ssr: false })
+const Contact = dynamic(() => import('@/components/portfolio/contact'), { ssr: false })
+const Footer = dynamic(() => import('@/components/portfolio/footer'), { ssr: false })
 
 function ScrollToTopFab() {
   const [visible, setVisible] = useState(false)

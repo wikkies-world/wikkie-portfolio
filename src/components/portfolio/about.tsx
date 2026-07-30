@@ -51,7 +51,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="py-24 lg:py-32 bg-background relative overflow-hidden"
+      className="pt-16 pb-24 lg:pt-20 lg:pb-32 bg-background relative overflow-hidden"
     >
       {/* subtle accent glow */}
       <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-brand/5 blur-3xl pointer-events-none" />
