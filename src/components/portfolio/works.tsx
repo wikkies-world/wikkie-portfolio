@@ -52,13 +52,14 @@ function useResolvedVideos(): Video[] {
 
   return videoSources.map((v: VideoSource): Video => {
     const portrait = v.height > v.width
+    const versionPath = v.cloudinaryVersion ? `v${v.cloudinaryVersion}/` : ''
     if (cloudName) {
       return {
         id: v.id,
         category: v.category,
         categorySlug: v.categorySlug,
-        src: `https://res.cloudinary.com/${cloudName}/video/upload/f_auto,q_auto/${v.cloudinaryPublicId}.mp4`,
-        poster: `https://res.cloudinary.com/${cloudName}/video/upload/so_1,f_jpg,q_auto,w_540/${v.cloudinaryPublicId}.jpg`,
+        src: `https://res.cloudinary.com/${cloudName}/video/upload/f_auto,q_auto/${versionPath}${v.cloudinaryPublicId}.mp4`,
+        poster: `https://res.cloudinary.com/${cloudName}/video/upload/so_1,f_jpg,q_auto,w_540/${versionPath}${v.cloudinaryPublicId}.jpg`,
         duration: v.duration,
         width: v.width,
         height: v.height,
@@ -292,7 +293,7 @@ function VideoCard({
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.4, delay: index * 0.04, ease: [0.22, 1, 0.36, 1] }}
-      className="mb-6 break-inside-avoid"
+      className="min-w-0"
     >
       <div
         ref={frameRef}
@@ -506,11 +507,9 @@ export default function Works() {
           ))}
         </motion.div>
 
-        {/* Masonry grid — handles mixed aspect ratios (portrait + landscape).
-            Portrait (9:16) videos render first, then landscape. */}
         <div
           key={activeCategory}
-          className="columns-2 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-4 [column-gap:1.5rem]"
+          className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4"
         >
           {filteredVideos.map((video, index) => (
             <VideoCard

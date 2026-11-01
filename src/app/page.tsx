@@ -16,7 +16,6 @@ const Marquee = dynamic(() => import('@/components/portfolio/marquee'), { ssr: f
 const Works = dynamic(() => import('@/components/portfolio/works'), { ssr: false })
 const Services = dynamic(() => import('@/components/portfolio/services'), { ssr: false })
 const Process = dynamic(() => import('@/components/portfolio/process'), { ssr: false })
-const Testimonials = dynamic(() => import('@/components/portfolio/testimonials'), { ssr: false })
 const Contact = dynamic(() => import('@/components/portfolio/contact'), { ssr: false })
 const Footer = dynamic(() => import('@/components/portfolio/footer'), { ssr: false })
 
@@ -60,7 +59,6 @@ export default function Home() {
         <Works />
         <Services />
         <Process />
-        <Testimonials />
         <Contact />
       </main>
       <Footer />
