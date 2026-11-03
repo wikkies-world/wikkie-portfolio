@@ -124,16 +124,17 @@ export default function About() {
             </h2>
             <div className="space-y-4 text-lg text-muted-foreground font-light leading-relaxed">
               <p>
-                I&apos;m Wikkie, a video editor specializing in event highlight
-                reels, talking-head content, and motion graphics. My approach
-                combines technical precision with creative storytelling —
-                ensuring every project connects with its audience.
+                I&apos;m WIKKIE, aka Vinod Kumar, a Video Editor passionate about
+                transforming raw footage and creative ideas into engaging
+                visual stories. I collaborate with content creators, personal
+                brands, businesses, and agencies worldwide to create impactful
+                Reels, YouTube videos, podcast clips, promotional content, and
+                motion graphics.
               </p>
               <p>
-                From cinematic wedding recaps to engaging talking-head content,
-                I bring a meticulous eye for detail and a deep understanding of
-                pacing, rhythm, and visual flow. Every cut is intentional,
-                every transition meaningful.
+                With a focus on clean editing, creative storytelling, and
+                engaging visuals, I aim to make every frame count and every
+                story memorable.
               </p>
             </div>
 

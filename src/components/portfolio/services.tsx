@@ -2,26 +2,32 @@
 
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
-import { Calendar, MessageSquare, Sparkles, ArrowUpRight } from 'lucide-react'
+import { Video, Youtube, Megaphone, Sparkles, ArrowUpRight } from 'lucide-react'
 
 const services = [
   {
-    icon: Calendar,
-    title: 'Event Edits',
+    icon: Video,
+    title: 'Reels & Podcast Clips',
     description:
-      'Cinematic highlight reels for weddings, birthdays, corporate events, and special occasions. Emotional storytelling with perfect pacing.',
+      'Engaging short-form edits with clean cuts, creative pacing, and captions that help your content stand out.',
   },
   {
-    icon: MessageSquare,
-    title: 'Talking Head Editing',
+    icon: Youtube,
+    title: 'YouTube Videos',
     description:
-      'Professional short-form content for professionals. Clear, engaging videos optimized for social media with dynamic cuts and captions.',
+      'Well-paced YouTube edits that shape your footage into clear, engaging stories from start to finish.',
+  },
+  {
+    icon: Megaphone,
+    title: 'Promotional Content',
+    description:
+      'Polished promotional videos that showcase your brand, product, or service with a memorable visual story.',
   },
   {
     icon: Sparkles,
     title: 'Motion Graphics',
     description:
-      'Eye-catching animations, logo reveals, and visual effects. Basic to intermediate level — currently expanding this skillset.',
+      'Custom animated titles, logo reveals, and visual accents that add style and clarity to your videos.',
   },
 ]
 
@@ -62,7 +68,7 @@ export default function Services() {
         </motion.div>
 
         {/* Services Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div className="grid sm:grid-cols-2 gap-6 max-w-5xl mx-auto">
           {services.map((service, index) => (
             <motion.div
               key={service.title}
