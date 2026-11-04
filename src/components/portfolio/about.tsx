@@ -5,7 +5,7 @@ import { useRef, useEffect, useState } from 'react'
 import { Film, Clock, Users } from 'lucide-react'
 
 const stats = [
-  { icon: Clock, value: 1, suffix: '+', label: 'Years' },
+  { icon: Clock, value: 2, suffix: '+', label: 'Years' },
   { icon: Film, value: 100, suffix: '+', label: 'Projects Completed' },
   { icon: Users, value: 50, suffix: '+', label: 'Happy Clients' },
 ]
